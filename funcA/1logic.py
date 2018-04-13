@@ -199,16 +199,6 @@ if __name__ == "__main__":
     
     newpmdata = getcsv(filename)
 
-    '''    
-    texts = ["人工知能を、利用したシステムは、面白い","人工知能を、利、面白い","人工知能を、利用ステムは、い"]
-    keitaiso(texts)
-    a = "googleへ絶対に転職する、NTTデータはマネジメントを武器にしているが限界がくる"
-    b = "NTTデータの武器はマネジメントだけど、これからの時代それだけでは無理で、googleなどには勝てない"
-    a1 = ['人工知能、利用するシステム、面白い', '人工知能、利、面白い', '人工知能、利用ステム、いる']
-    b1
-    print("2-gram:",diff_ngram(a,b,2))
-    '''
-
 
     #expmdata = pmdata.ix[:,['node','syorikinou']]
     #print(pmdata)
