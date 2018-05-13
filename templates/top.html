@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+<form action="/oview" method="POST">
+    <p>リスク種別</p>
+    <p>
+        <select name="risks">
+            <option value="a">ABEND</option>
+            <option value="b">性能</option>
+            <option value="c">データ破壊</option>
+        </select>
+    </p>
+    <button name="risk_value" value="risk_value">送信</button>
+</form>
+{% endblock %}
