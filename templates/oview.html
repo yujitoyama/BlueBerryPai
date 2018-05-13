@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<form action="/dview" method="POST">
+    <p>分析したいクラス名</p>
+    <p>
+        <select name="classs">
+            <option value="classA">classA</option>
+            <option value="classB">classB</option>
+            <option value="classC">classC</option>
+        </select>
+    </p>
+    <button name="class_name" value="class_name">送信</button>
+</form>
+
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script>
+    (function(){
+        "use strict";
+
+        var WIDTH = 600;
+        var HEIGHT = 240;
+
+        var riskA = {{ riskA|tojson }};
+        var riskB = {{ riskB|tojson }};
+        var riskC = {{ riskC|tojson }};
+        var data = [[riskA/10,"classA"],[riskB/10,"classB"],[riskC/10,"classC"]];
+
+        // スケール関数を作成。 
+        var color = d3.scaleLinear()
+            .domain([Math.min(riskA/10,riskB/10,riskC/10),Math.max(riskA/10,riskB/10,riskC/10)])
+            .range(["blue", "red"]);
+
+        var svg = d3.select("body").append("svg").attr("width", WIDTH).attr("height", HEIGHT);
+        var circles = d3.select('svg').selectAll('circle')
+            .data(data)
+            .enter()
+            .append("circle")
+
+        circles
+            .attr('cx',function(d,i){
+                return i * 150 + 100;
+            })
+            .attr('cy',HEIGHT/2)
+            .attr('r',function(d){
+                return d[0];
+            })
+            .attr('fill',function(d){
+                return color(d[0]);
+            })
+        
+        svg
+            .selectAll("text") 
+            .data(data) 
+            .enter()
+            .append("text")
+            .attr("x", function(d,i) { return i * 150 + 100;})
+            .attr("y", function(d,i) { return HEIGHT/2 + 10; })
+            .attr("fill", "black")
+            .text(function(d) {
+            return d[1];
+        });
+        })();
+</script>
+
+{% endblock %}

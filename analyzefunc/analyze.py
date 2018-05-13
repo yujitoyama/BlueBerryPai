@@ -32,9 +32,7 @@ def save_dict(dict_objs):
     '''
     client = MongoClient('localhost', 27017)
     db = client.blue_database
-    coll = db.test_collection4
-    #まとめてインサート
-    coll.insert_many(dict_objs)
+    db.bldata.insert_many(dict_objs)
     ''' 1件ずつインサートも可能
     for dict_obj in dict_objs:
         coll.insert_one(dict_obj)
@@ -65,7 +63,6 @@ def keitaiso(texts):
                 r.append(w)
                 rl = ("".join(r)).strip()
         results.append(rl)
-    #print(results)
     return results
     
 def ngram(s,num):
@@ -175,13 +172,11 @@ def label_to_class(data):
     jisyoclass = []
     for jisyo in ljisyo:
         if jisyo == "ABEND":
-            jisyoclass.append("0")
-        elif jisyo == "システム停止":
-            jisyoclass.append("1")
-        elif jisyo == "データ破壊":
-            jisyoclass.append("2")
+            jisyoclass.append("a")
         elif jisyo == "性能":
-            jisyoclass.append("3") 
+            jisyoclass.append("b")
+        elif jisyo == "データ破壊":
+            jisyoclass.append("c")
         else:                 
             jisyoclass.append("4")
 
@@ -210,6 +205,3 @@ if __name__ == "__main__":
     #print(np.random.randint(0,10,2))
     #print(df)
 
-★totalスコアを算出 /必要なやつらをint化してsumをとってそれを列追加
-★funcCをつくる
-★funcDをつくる

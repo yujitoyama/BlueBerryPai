@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script>
+    var node1 = {{ node1|tojson }};
+    var node2 = {{ node2|tojson }};
+    var node3 = {{ node3|tojson }};
+    var node4 = {{ node4|tojson }};
+    var node5 = {{ node5|tojson }};
+    var dataset = [
+        {"node": "fweb","count":node1},
+        {"node": "即決GW","count":node2},
+        {"node": "SOAP-GW","count":node3},
+        {"node": "顧客バッチ","count":node4},
+        {"node": "料金バッチ","count":node5}
+        ];
+ 
+    var width = 400; // グラフの幅
+    var height = 300; // グラフの高さ
+    var radius = Math.min(width, height) / 2 - 10;
+    
+    // 2. SVG領域の設定
+    var svg = d3.select("body").append("svg").attr("width", width).attr("height", height);
+    
+    g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+    
+    // 3. カラーの設定
+    var color = d3.scaleOrdinal()
+      .range(["#DC3912", "#3366CC", "#109618", "#FF9900", "#990099"]);
+    
+    // 4. pieチャートデータセット用関数の設定
+    var pie = d3.pie()
+      .value(function(d) { return d.count; })
+      //.sort(null);
+    
+    // 5. pieチャートSVG要素の設定
+    var pieGroup = g.selectAll(".pie")
+      .data(pie(dataset))
+      .enter()
+      .append("g")
+      .attr("class", "pie");
+    
+    arc = d3.arc()
+      .outerRadius(radius)
+      .innerRadius(0);
+    
+    pieGroup.append("path")
+      .attr("d", arc)
+      .attr("fill", function(d) { return color(d.index) })
+      .attr("opacity", 0.75)
+      .attr("stroke", "white");
+    
+    // 6. pieチャートテキストSVG要素の設定
+    var text = d3.arc()
+      .outerRadius(radius - 30)
+      .innerRadius(radius - 30);
+    
+    pieGroup.append("text")
+      .attr("fill", "black")
+      .attr("transform", function(d) { return "translate(" + text.centroid(d) + ")"; })
+      .attr("dy", "5px")
+      .attr("font", "10px")
+      .attr("text-anchor", "middle")
+      .text(function(d) { return d.data.node; });
+</script>
+
+{% endblock %}
