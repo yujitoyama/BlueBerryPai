@@ -204,4 +204,3 @@ if __name__ == "__main__":
     #df['job'] = np.random.randint(0,10,2)
     #print(np.random.randint(0,10,2))
     #print(df)
-

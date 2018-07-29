@@ -28,7 +28,6 @@ def oview():
     riskvalues = {}
     for r in agg:
         riskvalues[r['_id']] = r['total']
-    print(riskvalues)
     riskA = riskvalues["classA"]
     riskB = riskvalues["classB"]
     riskC = riskvalues["classC"]
